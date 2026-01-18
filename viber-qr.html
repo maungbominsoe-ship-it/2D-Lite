@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Viber QR Code - 2D Plus VIP Lottery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for Viber QR page */
+        .viber-qr-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #0a192f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .viber-qr-container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid #7360f2;
+            box-shadow: 0 20px 50px rgba(115, 96, 242, 0.3);
+        }
+        
+        .viber-header {
+            margin-bottom: 30px;
+        }
+        
+        .viber-logo {
+            font-size: 70px;
+            color: #7360f2;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(115, 96, 242, 0.5);
+        }
+        
+        .viber-header h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .viber-header p {
+            color: #aaa;
+            font-size: 16px;
+        }
+        
+        .qr-code-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+        
+        .qr-code-box img {
+            width: 250px;
+            height: 250px;
+            display: block;
+            border-radius: 10px;
+        }
+        
+        .qr-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #7360f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-overlay i {
+            font-size: 30px;
+            color: white;
+        }
+        
+        .instructions {
+            background: rgba(115, 96, 242, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: left;
+            border-left: 4px solid #7360f2;
+        }
+        
+        .instructions h3 {
+            color: #7360f2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ol {
+            color: white;
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .instructions strong {
+            color: #ffd700;
+        }
+        
+        .payment-note {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #ffd700;
+            margin: 20px 0;
+        }
+        
+        .payment-note h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-note p {
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            border: 1px solid #00d4ff;
+        }
+        
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .phone-display {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: white;
+        }
+        
+        .phone-display i {
+            color: #00d4ff;
+            font-size: 20px;
+        }
+        
+        .phone-display strong {
+            font-size: 22px;
+            color: #ffd700;
+        }
+        
+        @media (max-width: 768px) {
+            .viber-qr-container {
+                padding: 25px;
+            }
+            
+            .qr-code-box img {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .viber-qr-container {
+                padding: 20px;
+            }
+            
+            .qr-code-box img {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .viber-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Snow Background -->
+    <canvas id="snowCanvas"></canvas>
+    
+    <!-- Viber QR Page Content -->
+    <div class="viber-qr-page">
+        <div class="viber-qr-container">
+            <!-- Header with Viber Logo -->
+            <div class="viber-header">
+                <div class="viber-logo">
+                    <i class="fab fa-viber"></i>
+                </div>
+                <h1>Chat on Viber</h1>
+                <p>Scan QR code or save phone number</p>
+            </div>
+            
+            <!-- Phone Number Display -->
+            <div class="phone-display">
+                <i class="fas fa-phone-alt"></i>
+                <span>Phone: </span>
+                <strong id="phoneNumber">09 269 481 221</strong>
+                <button class="copy-small" onclick="copyPhoneNumber()" title="Copy">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            
+            <!-- QR Code -->
+            <div class="qr-code-box">
+                <img src="Viber thar soe.jpg" alt="Viber QR Code" id="viberQR">
+                <!-- If you don't have QR image, you can use text -->
+                <div id="qrFallback" style="display: none;">
+                    <div style="padding: 40px; color: #333; font-size: 14px;">
+                        <i class="fab fa-viber" style="font-size: 40px; color: #7360f2; margin-bottom: 10px;"></i>
+                        <p>Viber QR Code Image</p>
+                        <p><small>Place your QR code image as<br>"viber-qr-code.png" in website folder</small></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3><i class="fas fa-mobile-alt"></i> How to Scan & Chat</h3>
+                <ol>
+                    <li><strong>Open Viber</strong> on your phone</li>
+                    <li>Tap <strong>More (•••)</strong> → <strong>QR Scanner</strong></li>
+                    <li>Point camera at the QR code above</li>
+                    <li>Tap <strong>Add Contact</strong> to start chatting</li>
+                    <li>Send your <strong>payment screenshot</strong> after payment</li>
+                </ol>
+            </div>
+            
+            <!-- Payment Note -->
+            <div class="payment-note">
+                <h4><i class="fas fa-camera"></i> Important: Send Payment Screenshot</h4>
+                <p>After making payment via KPay/WavePay, please send the <strong>payment confirmation screenshot</strong> through this Viber chat. We'll verify and send your VIP package immediately.</p>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn copy-btn" onclick="copyPhoneNumber()">
+                    <i class="fas fa-copy"></i> Copy Phone Number
+                </button>
+                <button class="action-btn back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+            
+            <!-- Success Message -->
+            <div class="copy-success" id="copySuccess">
+                <i class="fas fa-check-circle"></i>
+                <span>Phone number copied to clipboard!</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="snow.js"></script>
+    <script>
+        // Check if QR image exists
+        window.addEventListener('load', function() {
+            const qrImage = document.getElementById('viberQR');
+            const qrFallback = document.getElementById('qrFallback');
+            
+            qrImage.onerror = function() {
+                qrImage.style.display = 'none';
+                qrFallback.style.display = 'block';
+            };
+        });
+        
+        // Copy phone number function
+        function copyPhoneNumber() {
+            const phone = '09269481221';
+            const tempInput = document.createElement('input');
+            tempInput.value = phone;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Show success message
+            const successMsg = document.getElementById('copySuccess');
+            successMsg.style.display = 'flex';
+            successMsg.style.animation = 'fadeIn 0.3s ease';
+            
+            setTimeout(() => {
+                successMsg.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 300);
+            }, 3000);
+            
+            console.log('Phone number copied:', phone);
+        }
+        
+        // Go back to home page
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            .copy-success {
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4CAF50;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                display: none;
+                align-items: center;
+                gap: 10px;
+                z-index: 1000;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+            
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            }
+            
+            .copy-small {
+                background: none;
+                border: none;
+                color: #00d4ff;
+                cursor: pointer;
+                padding: 5px;
+                border-radius: 5px;
+                margin-left: 10px;
+            }
+            
+            .copy-small:hover {
+                background: rgba(0, 212, 255, 0.1);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
