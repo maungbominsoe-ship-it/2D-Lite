@@ -2,238 +2,462 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="/favicon.png">
-    <title>Join Viber via QR Code - 2D Lite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Scan Viber QR Code - 2D Plus VIP Lottery</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Additional styles for Viber QR page */
-        .viber-qr-page {
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
             min-height: 100vh;
             background: linear-gradient(135deg, #1a1a2e, #0a192f);
+        }
+
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Main container */
+        .viber-qr-page {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            z-index: 2;
         }
-        
+
         .viber-qr-container {
-            max-width: 500px;
+            max-width: 520px;
             width: 100%;
             text-align: center;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 24px;
+            padding: 35px 25px;
             border: 2px solid #7360f2;
             box-shadow: 0 20px 50px rgba(115, 96, 242, 0.3);
+            margin: 20px auto;
         }
-        
+
+        /* Header styles */
         .viber-header {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-        
+
         .viber-logo {
             font-size: 70px;
             color: #7360f2;
             margin-bottom: 15px;
             text-shadow: 0 0 20px rgba(115, 96, 242, 0.5);
+            animation: pulseViber 2s infinite ease-in-out;
         }
-        
+
+        @keyframes pulseViber {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         .viber-header h1 {
             color: white;
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: clamp(24px, 6vw, 32px);
+            margin-bottom: 8px;
+            font-weight: 600;
         }
-        
+
         .viber-header p {
             color: #aaa;
-            font-size: 16px;
+            font-size: clamp(14px, 4vw, 16px);
         }
-        
-        .qr-code-box {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 30px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-        }
-        
-        .qr-code-box img {
-            width: 250px;
-            height: 250px;
-            display: block;
-            border-radius: 10px;
-        }
-        
-        .qr-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: #7360f2;
-            border-radius: 50%;
+
+        /* Phone display */
+        .phone-display {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 50px;
+            margin: 20px 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 10px;
+            color: white;
+            flex-wrap: wrap;
+            border: 1px solid rgba(115, 96, 242, 0.3);
         }
-        
-        .qr-overlay i {
-            font-size: 30px;
+
+        .phone-display i {
+            color: #00d4ff;
+            font-size: 18px;
+        }
+
+        .phone-display span {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .phone-display strong {
+            font-size: clamp(18px, 5vw, 22px);
+            color: #ffd700;
+            letter-spacing: 1px;
+        }
+
+        .copy-small {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 25px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .copy-small:hover {
+            background: #00d4ff;
             color: white;
         }
-        
+
+        /* QR Code box */
+        .qr-code-box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 25px 0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .qr-code-box img {
+            width: 100%;
+            height: auto;
+            max-width: 260px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+        }
+
+        #qrFallback {
+            padding: 30px 20px;
+            color: #333;
+        }
+
+        #qrFallback i {
+            font-size: 60px;
+            color: #7360f2;
+            margin-bottom: 15px;
+        }
+
+        #qrFallback p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        #qrFallback small {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* Instructions section */
         .instructions {
             background: rgba(115, 96, 242, 0.1);
             padding: 25px;
-            border-radius: 15px;
-            margin: 30px 0;
+            border-radius: 16px;
+            margin: 25px 0;
             text-align: left;
             border-left: 4px solid #7360f2;
         }
-        
+
         .instructions h3 {
             color: #7360f2;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: clamp(18px, 5vw, 20px);
         }
-        
+
         .instructions ol {
             color: white;
             padding-left: 20px;
             line-height: 1.8;
         }
-        
+
         .instructions li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: clamp(14px, 4vw, 15px);
         }
-        
+
         .instructions strong {
             color: #ffd700;
         }
-        
+
+        /* Payment note */
         .payment-note {
             background: rgba(255, 215, 0, 0.1);
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 16px;
             border: 1px solid #ffd700;
-            margin: 20px 0;
+            margin: 25px 0;
         }
-        
+
         .payment-note h4 {
             color: #ffd700;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: clamp(16px, 5vw, 18px);
         }
-        
+
         .payment-note p {
             color: white;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: clamp(13px, 4vw, 15px);
         }
-        
+
+        /* Action buttons */
         .action-buttons {
             display: flex;
             gap: 15px;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 25px;
             flex-wrap: wrap;
         }
-        
+
         .action-btn {
-            padding: 12px 25px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 50px;
+            font-size: clamp(14px, 4vw, 16px);
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             transition: all 0.3s;
+            flex: 1;
+            min-width: 200px;
         }
-        
+
         .copy-btn {
-            background: rgba(0, 212, 255, 0.2);
+            background: rgba(0, 212, 255, 0.1);
             color: #00d4ff;
-            border: 1px solid #00d4ff;
+            border: 2px solid #00d4ff;
         }
-        
+
+        .copy-btn:hover {
+            background: #00d4ff;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+        }
+
         .back-btn {
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
         }
-        
-        .action-btn:hover {
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
         }
-        
-        .phone-display {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
+
+        .back-btn a {
+            color: white;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
+            gap: 10px;
+        }
+
+        /* Success message */
+        .copy-success {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
             color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+            font-size: 14px;
+            white-space: nowrap;
+            max-width: 90%;
         }
-        
-        .phone-display i {
-            color: #00d4ff;
-            font-size: 20px;
-        }
-        
-        .phone-display strong {
-            font-size: 22px;
-            color: #ffd700;
-        }
-        
+
+        /* Responsive breakpoints */
         @media (max-width: 768px) {
             .viber-qr-container {
-                padding: 25px;
+                padding: 25px 20px;
+                border-radius: 20px;
             }
-            
-            .qr-code-box img {
-                width: 200px;
-                height: 200px;
+
+            .viber-logo {
+                font-size: 60px;
             }
-            
-            .action-buttons {
-                flex-direction: column;
+
+            .qr-code-box {
+                max-width: 280px;
+                padding: 15px;
             }
-            
+
             .action-btn {
-                width: 100%;
-                justify-content: center;
+                min-width: 100%;
+                padding: 12px 20px;
+            }
+
+            .phone-display {
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .copy-small {
+                padding: 6px 10px;
+                font-size: 12px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .viber-qr-container {
-                padding: 20px;
+                padding: 20px 15px;
             }
-            
-            .qr-code-box img {
-                width: 180px;
-                height: 180px;
+
+            .viber-logo {
+                font-size: 50px;
             }
-            
+
             .viber-header h1 {
-                font-size: 24px;
+                font-size: 22px;
             }
+
+            .qr-code-box {
+                max-width: 240px;
+                padding: 12px;
+            }
+
+            .phone-display {
+                flex-direction: column;
+                gap: 8px;
+                border-radius: 20px;
+                padding: 12px;
+            }
+
+            .phone-display strong {
+                font-size: 20px;
+            }
+
+            .copy-small {
+                width: 100%;
+                justify-content: center;
+                margin-left: 0;
+            }
+
+            .instructions {
+                padding: 20px 15px;
+            }
+
+            .instructions ol {
+                padding-left: 15px;
+            }
+
+            .instructions li {
+                font-size: 13px;
+                margin-bottom: 10px;
+            }
+
+            .payment-note {
+                padding: 15px;
+            }
+
+            .copy-success {
+                font-size: 13px;
+                padding: 12px 20px;
+                white-space: normal;
+                text-align: center;
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .viber-qr-container {
+                padding: 15px 12px;
+            }
+
+            .viber-logo {
+                font-size: 45px;
+            }
+
+            .viber-header h1 {
+                font-size: 20px;
+            }
+
+            .qr-code-box {
+                max-width: 200px;
+            }
+
+            .phone-display strong {
+                font-size: 18px;
+            }
+
+            .instructions h3 {
+                font-size: 16px;
+            }
+
+            .instructions li {
+                font-size: 12px;
+            }
+
+            .payment-note h4 {
+                font-size: 15px;
+            }
+
+            .payment-note p {
+                font-size: 12px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(20px); }
         }
     </style>
 </head>
@@ -256,23 +480,21 @@
             <!-- Phone Number Display -->
             <div class="phone-display">
                 <i class="fas fa-phone-alt"></i>
-                <span>Phone: </span>
+                <span>Phone:</span>
                 <strong id="phoneNumber">09 269 481 221</strong>
-                <button class="copy-small" onclick="copyPhoneNumber()" title="Copy">
-                    <i class="fas fa-copy"></i>
+                <button class="copy-small" onclick="copyPhoneNumber()">
+                    <i class="fas fa-copy"></i> Copy
                 </button>
             </div>
             
             <!-- QR Code -->
             <div class="qr-code-box">
                 <img src="Viber thar soe.jpg" alt="Viber QR Code" id="viberQR">
-                <!-- If you don't have QR image, you can use text -->
+                <!-- Fallback if QR image doesn't exist -->
                 <div id="qrFallback" style="display: none;">
-                    <div style="padding: 40px; color: #333; font-size: 14px;">
-                        <i class="fab fa-viber" style="font-size: 40px; color: #7360f2; margin-bottom: 10px;"></i>
-                        <p>Viber QR Code Image</p>
-                        <p><small>Place your QR code image as<br>"viber-qr-code.png" in website folder</small></p>
-                    </div>
+                    <i class="fab fa-viber"></i>
+                    <p>Viber QR Code Image</p>
+                    <p><small>Place your QR code image as "Viber thar soe.jpg" in website folder</small></p>
                 </div>
             </div>
             
@@ -281,7 +503,7 @@
                 <h3><i class="fas fa-mobile-alt"></i> How to Scan & Chat</h3>
                 <ol>
                     <li><strong>Open Viber</strong> on your phone</li>
-                    <li>Tap <strong>More (•••)</strong> → <strong>QR Scanner</strong></li>
+                    <li>Tap <strong>More (•••)</strong> → <strong>Scan QR Code</strong></li>
                     <li>Point camera at the QR code above</li>
                     <li>Tap <strong>Add Contact</strong> to start chatting</li>
                     <li>Send your <strong>payment screenshot</strong> after payment</li>
@@ -299,10 +521,9 @@
                 <button class="action-btn copy-btn" onclick="copyPhoneNumber()">
                     <i class="fas fa-copy"></i> Copy Phone Number
                 </button>
-                <button class="action-btn back-btn" onclick="goBack()">
-                    <i class="fas fa-arrow-left"></i> 
-                    <a href="index.html" style="color: #fff;">Back to Home</a>
-                </button>
+                <a href="index.html" class="action-btn back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
             </div>
             
             <!-- Success Message -->
@@ -321,89 +542,60 @@
             const qrImage = document.getElementById('viberQR');
             const qrFallback = document.getElementById('qrFallback');
             
-            qrImage.onerror = function() {
-                qrImage.style.display = 'none';
-                qrFallback.style.display = 'block';
-            };
+            if (qrImage) {
+                qrImage.onerror = function() {
+                    qrImage.style.display = 'none';
+                    qrFallback.style.display = 'block';
+                };
+            }
         });
         
         // Copy phone number function
         function copyPhoneNumber() {
             const phone = '09269481221';
+            
+            // Modern clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(phone).then(function() {
+                    showCopySuccess();
+                }).catch(function(err) {
+                    // Fallback for older browsers
+                    fallbackCopy(phone);
+                });
+            } else {
+                // Fallback for older browsers
+                fallbackCopy(phone);
+            }
+        }
+        
+        // Fallback copy method
+        function fallbackCopy(text) {
             const tempInput = document.createElement('input');
-            tempInput.value = phone;
+            tempInput.value = text;
             document.body.appendChild(tempInput);
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
-            
-            // Show success message
+            showCopySuccess();
+        }
+        
+        // Show success message
+        function showCopySuccess() {
             const successMsg = document.getElementById('copySuccess');
-            successMsg.style.display = 'flex';
-            successMsg.style.animation = 'fadeIn 0.3s ease';
-            
-            setTimeout(() => {
-                successMsg.style.animation = 'fadeOut 0.3s ease';
+            if (successMsg) {
+                successMsg.style.display = 'flex';
+                successMsg.style.animation = 'fadeIn 0.3s ease';
+                
                 setTimeout(() => {
-                    successMsg.style.display = 'none';
-                }, 300);
-            }, 3000);
+                    successMsg.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 300);
+                }, 3000);
+            }
             
-            console.log('Phone number copied:', phone);
+            console.log('Phone number copied successfully!');
         }
-        
-        // Go back to home page
-        function goBack() {
-            window.location.href = 'index.html';
-        }
-        
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            .copy-success {
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #4CAF50;
-                color: white;
-                padding: 15px 25px;
-                border-radius: 10px;
-                display: none;
-                align-items: center;
-                gap: 10px;
-                z-index: 1000;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-                to { opacity: 1; transform: translateX(-50%) translateY(0); }
-            }
-            
-            @keyframes fadeOut {
-                from { opacity: 1; transform: translateX(-50%) translateY(0); }
-                to { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            }
-            
-            .copy-small {
-                background: none;
-                border: none;
-                color: #00d4ff;
-                cursor: pointer;
-                padding: 5px;
-                border-radius: 5px;
-                margin-left: 10px;
-            }
-            
-            .copy-small:hover {
-                background: rgba(0, 212, 255, 0.1);
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
-
 </html>
-
-
