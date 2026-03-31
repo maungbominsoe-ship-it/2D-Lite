@@ -986,7 +986,6 @@ body.closed-day .evening-code {
     font-size: 12px;
     color: #aaa;
     text-align: center;
-    margin-top: 10px;
 }
 
 .container {
@@ -1692,7 +1691,7 @@ body.closed-day .upper-vip-title {
     }
     
     .fot-container p {
-        font-size: 11px;
+        font-size: 9px;
     }
     
     .motivation-text {
@@ -1721,8 +1720,8 @@ body.closed-day .upper-vip-title {
     }
     
     .business-note {
-        margin: 0 20px 20px;
-        font-size: 12.5px;
+        margin: 10px 25px;
+        font-size: 11px;
     }
     
     .time-label {
