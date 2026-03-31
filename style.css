@@ -969,7 +969,8 @@ body.closed-day .evening-code {
 .business-note {
     text-align: center;
     font-style: italic;
-    color: #aaa;
+    font-size: 13.5px;
+    color: #fff;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 5px;
@@ -982,7 +983,10 @@ body.closed-day .evening-code {
 }
 
 .fot-container p {
-    font-size: 14px;
+    font-size: 12px;
+    color: #aaa;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .container {
