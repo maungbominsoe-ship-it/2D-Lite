@@ -1044,7 +1044,7 @@ class LanguageTranslator {
                 'change-language': 'Change language',
                 'language': 'Language',
                 '2d-results': '2D results',
-                'intro-text': ' The one trusted website where you can buy winning "2D lucky lottery numbers" online.',
+                'intro-text': ' The one trusted website where you can get winning "2D lucky lottery numbers" online.',
                 'morning-session': 'Morning session',
                 'evening-session': 'Evening session',
                 'today-2d-closed': 'TODAY 2D CLOSED',
